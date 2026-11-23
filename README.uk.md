@@ -5,7 +5,7 @@
 Стартовий екран у стилі PocketBook для [KOReader](https://github.com/koreader/koreader). На ньому книги, які ви
 справді читаєте, а не список файлів.
 
-<!-- Тут можна додати скриншот, наприклад: ![Головний екран](screenshots/home.png) -->
+<p align="center"><img src="screenshots/home.png" alt="Головний екран" width="420"></p>
 
 ## Можливості
 

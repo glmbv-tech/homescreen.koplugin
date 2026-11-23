@@ -5,7 +5,7 @@
 A PocketBook-style start screen for [KOReader](https://github.com/koreader/koreader). It shows the books you are
 actually reading, not a file list.
 
-<!-- Add a screenshot here, e.g.: ![Home screen](screenshots/home.png) -->
+<p align="center"><img src="screenshots/home.png" alt="Home screen" width="420"></p>
 
 ## Features
 
