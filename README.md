@@ -40,6 +40,7 @@ actually reading, not a file list.
 
 - **Tap** a cover to open the book.
 - **Long-press** a cover for more options: Open, Book information, Show in Library, Reload cover.
+- **Tap or swipe down at the top of the screen** (top 1/8, even over a cover) to open the KOReader menu, as in the file manager and the reader.
 - **Back** or **Library** closes the home screen and returns to the file manager.
 
 ### Settings

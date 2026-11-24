@@ -659,6 +659,43 @@ end
 -- Events
 ---------------------------------------------------------------------------
 
+-- Is the gesture inside KOReader's top menu zone (DTAP_ZONE_MENU, the top 1/8 of the screen)?
+local function inTopMenuZone(ges)
+    if not ges or not ges.pos then return false end
+    local zone = G_defaults:readSetting("DTAP_ZONE_MENU") or { x = 0, y = 0, w = 1, h = 1/8 }
+    local sw, sh = Screen:getWidth(), Screen:getHeight()
+    local x, y = ges.pos.x, ges.pos.y
+    return x >= zone.x * sw and x < (zone.x + zone.w) * sw
+       and y >= zone.y * sh and y < (zone.y + zone.h) * sh
+end
+
+-- Tap / swipe down at the top of the screen opens the main menu, like in the
+-- File manager and the Reader, even when it lands on a cover.
+function HomeScreenWidget:handleTopMenuGesture(ges)
+    if not ges or not inTopMenuZone(ges) then return false end
+    local menu = self.ui and self.ui.menu
+    if not menu or not menu.onShowMenu then return false end
+    local activation = G_reader_settings:readSetting("activate_menu") or "swipe_tap"
+    local wanted
+    if ges.ges == "tap" then
+        wanted = activation ~= "swipe"
+    elseif ges.ges == "swipe" and ges.direction == "south" then
+        wanted = activation ~= "tap"
+    end
+    if not wanted then return false end
+    local tab_index = menu._getTabIndexFromLocation and menu:_getTabIndexFromLocation(ges) or nil
+    menu:onShowMenu(tab_index)
+    return true
+end
+
+-- Intercept gestures before they reach the cover tiles (children get events first).
+function HomeScreenWidget:handleEvent(event)
+    if event.handler == "onGesture" and self:handleTopMenuGesture(event.args and event.args[1]) then
+        return true
+    end
+    return InputContainer.handleEvent(self, event)
+end
+
 function HomeScreenWidget:onShow()
     self:startBackgroundTasks()
     return true
